@@ -33,8 +33,8 @@ microservices](./architecture_.jpg)](./architecture_.jpg)
   Most services need to persist data in some kind of database.
 - **[Saga Pattern](https://microservices.io/patterns/data/saga.html)**
   A saga is a sequence of local transactions. Each local transaction updates the database and publishes a message or event to trigger the next local transaction in the saga.
-- **[Command Query Responsibility Segregation (CQRS)](https://microservices.io/patterns/data/cqrs.html)**
-  The application keeps the replica up to data by subscribing to Domain events published by the service that own the data.
+- **[Api-composition pattern](https://microservices.io/patterns/data/api-composition.html)**
+  It's invoking the services that own the data and performs an in-memory join of the results.
 - **[Event sourcing Pattern](https://microservices.io/patterns/data/event-sourcing.html)**
   To reliably/atomically update the database and publish messages/events.
 - **[API Gateway / Backends for Frontends Pattern](https://microservices.io/patterns/apigateway.html)**
