@@ -23,7 +23,7 @@ microservices](./architecture_.jpg)](./architecture_.jpg)
 | [orderhistoryService](./*)                           | Node.js       | Provides order history and product catelogues.                                      
 | [userInformationService](./*)                        | Java          | Provides user information and authenticate users. (*under_development)                                                            |
 | [reviewService](./*)                                 | C#            | Review service for the product. 
-| [rabbitMq](./*)                                      | Java          | Passing messages between services.
+| [rabbitMq](./*)                                      | JavaScript          | Passing messages between services.
   
 ## Microservice Patterns usages for development
 
