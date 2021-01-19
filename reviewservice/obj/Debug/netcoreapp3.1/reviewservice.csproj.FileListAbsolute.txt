@@ -17,3 +17,33 @@ E:\project work\Microservice\reviewservice\obj\Debug\netcoreapp3.1\reviewservice
 E:\project work\Microservice\reviewservice\obj\Debug\netcoreapp3.1\reviewservice.dll
 E:\project work\Microservice\reviewservice\obj\Debug\netcoreapp3.1\reviewservice.pdb
 E:\project work\Microservice\reviewservice\obj\Debug\netcoreapp3.1\reviewservice.genruntimeconfig.cache
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\netcoreapp3.1\reviewservice.csprojAssemblyReference.cache
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\netcoreapp3.1\reviewservice.AssemblyInfoInputs.cache
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\netcoreapp3.1\reviewservice.AssemblyInfo.cs
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\netcoreapp3.1\reviewservice.csproj.CoreCompileInputs.cache
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\netcoreapp3.1\reviewservice.MvcApplicationPartsAssemblyInfo.cache
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\netcoreapp3.1\reviewservice.dll
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\netcoreapp3.1\reviewservice.pdb
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\appsettings.Development.json
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\appsettings.json
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\reviewservice.exe
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\reviewservice.deps.json
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\reviewservice.runtimeconfig.json
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\reviewservice.runtimeconfig.dev.json
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\reviewservice.dll
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\reviewservice.pdb
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\DnsClient.dll
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\MongoDB.Bson.dll
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\MongoDB.Driver.dll
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\MongoDB.Driver.Core.dll
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\MongoDB.Libmongocrypt.dll
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\SharpCompress.dll
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\runtimes\win\native\libzstd.dll
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\runtimes\win\native\snappy32.dll
+F:\PROJECTNULLx\nullx\nullx\reviewservice\bin\Debug\netcoreapp3.1\runtimes\win\native\snappy64.dll
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\netcoreapp3.1\staticwebassets\reviewservice.StaticWebAssets.Manifest.cache
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\netcoreapp3.1\staticwebassets\reviewservice.StaticWebAssets.xml
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\netcoreapp3.1\scopedcss\bundle\reviewservice.styles.css
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\netcoreapp3.1\reviewservice.RazorTargetAssemblyInfo.cache
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\netcoreapp3.1\reviewservice.csproj.CopyComplete
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\netcoreapp3.1\reviewservice.genruntimeconfig.cache

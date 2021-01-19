@@ -1,3 +1,8 @@
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,10 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using reviewservice.Models;
+using reviewservice.Services;
+using reviewservices.Models;
 
 namespace reviewservice
 {
@@ -22,30 +27,43 @@ namespace reviewservice
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        #region snippet_ConfigureServices
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-        }
+            services.Configure<ReviewDatabaseSettings>(
+                Configuration.GetSection(nameof(ReviewDatabaseSettings)));
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            services.AddSingleton<IReviewDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<ReviewDatabaseSettings>>().Value);
+
+            services.AddSingleton<ReviewService>();
+            services.AddScoped<ReviewService>();
+
+            services.AddControllers();
+            
+
+        }
+        #endregion
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
         }
     }
+
+    
 }
