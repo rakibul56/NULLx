@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\project work\\Microservice\\reviewservice\\reviewservice.csproj": {}
+    "F:\\PROJECTNULLx\\nullx\\nullx\\reviewservice\\reviewservice.csproj": {}
   },
   "projects": {
-    "E:\\project work\\Microservice\\reviewservice\\reviewservice.csproj": {
+    "F:\\PROJECTNULLx\\nullx\\nullx\\reviewservice\\reviewservice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\project work\\Microservice\\reviewservice\\reviewservice.csproj",
+        "projectUniqueName": "F:\\PROJECTNULLx\\nullx\\nullx\\reviewservice\\reviewservice.csproj",
         "projectName": "reviewservice",
-        "projectPath": "E:\\project work\\Microservice\\reviewservice\\reviewservice.csproj",
-        "packagesPath": "C:\\Users\\engr_\\.nuget\\packages\\",
-        "outputPath": "E:\\project work\\Microservice\\reviewservice\\obj\\",
+        "projectPath": "F:\\PROJECTNULLx\\nullx\\nullx\\reviewservice\\reviewservice.csproj",
+        "packagesPath": "C:\\Users\\rakib\\.nuget\\packages\\",
+        "outputPath": "F:\\PROJECTNULLx\\nullx\\nullx\\reviewservice\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\engr_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rakib\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,6 +39,12 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.11.5, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -57,7 +63,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
