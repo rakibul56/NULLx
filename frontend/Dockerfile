@@ -1,13 +1,11 @@
 FROM node:12.2.0-alpine
-
-# set working directory
-WORKDIR /app
+WORKDIR /src
 
 COPY package*.json ./
 
 RUN npm install
 
 COPY . .
+EXPOSE 3000
+CMD [ "npm", "start" ]
 
-# start app
-CMD ["npm", "run", "serve"]
