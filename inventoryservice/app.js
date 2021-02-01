@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3052;
+const port = 8080;
 var mysql = require('mysql');
 const cors = require('cors');
 var bodyParser = require('body-parser')
