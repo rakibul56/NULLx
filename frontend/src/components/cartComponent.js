@@ -15,7 +15,6 @@ class CartComponent extends React.Component{
             .catch(function (error) {
                 console.log(error);
             });
-
     }
     render() {
         return (
