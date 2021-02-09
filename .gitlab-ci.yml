@@ -1,0 +1,14 @@
+image: docker:latest
+
+before_script:
+  - docker info  
+
+services:
+  - docker:18.09.1-dind
+
+build:
+  stage: build
+  only:
+    - master
+  script:
+    - docker build -t inventoryservice .
