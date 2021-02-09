@@ -49,9 +49,9 @@ microservices](./architecture_.jpg)](./architecture_.jpg)
 
 
 --------------------------------------------------
-#Documentation
+# Documentation
 
-##Reason for choosing RabbitMq:
+## Reason for choosing RabbitMq:
 
 It has enormous feathers and is freely available, which will be a great option to implement messaging queues in our microservices architecture project in this planspiel. This messaging queues pattern helps us to keep other services persistent while communicating with them. RabbitMQ has a functionality to keep the queues in priority so that consumers can easily get high priority messages or tasks.
 For its huge ability and fulfill every requirement of us we choose this instead of others like Apache Kafka. Apache Kafka also is a great tool but for this project it is unnecessary to use other functionality which we do not need at all. Starting this lightweight RabbitMQ tool with huge functionality we can easily achieve our goals.
