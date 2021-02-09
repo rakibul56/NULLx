@@ -55,3 +55,13 @@ microservices](./architecture_.jpg)](./architecture_.jpg)
 
 It has enormous feathers and is freely available, which will be a great option to implement messaging queues in our microservices architecture project in this planspiel. This messaging queues pattern helps us to keep other services persistent while communicating with them. RabbitMQ has a functionality to keep the queues in priority so that consumers can easily get high priority messages or tasks.
 For its huge ability and fulfill every requirement of us we choose this instead of others like Apache Kafka. Apache Kafka also is a great tool but for this project it is unnecessary to use other functionality which we do not need at all. Starting this lightweight RabbitMQ tool with huge functionality we can easily achieve our goals.
+
+## Reason for choosing database per service:
+
+For our project, We must ensure our application should be loosely coupled so that we can develop, deploy and scale it independently. Database per service gives us that opportunity to develop our application in such a way if we need to change one service database for example that it does not impact other services at all.
+
+“Different services have different data storage requirements. For some services, a relational database is the best choice. Other services might need a NoSQL database such as MongoDB, which is good at storing complex, unstructured data, or Neo4J, which is designed to efficiently store and query graph data.”[2]
+
+For those benefits, we found a database per service is the right choice for our application which is able to fulfill our every requirement.   
+
+
