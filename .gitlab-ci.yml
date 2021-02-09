@@ -11,4 +11,4 @@ build:
   only:
     - master
   script:
-    - docker build -t inventoryservice .
+    - docker build -t inventoryservice inventoryservice/.
