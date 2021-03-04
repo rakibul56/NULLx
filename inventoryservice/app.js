@@ -59,9 +59,9 @@ amqp.connect('amqp://localhost', function(error0, connection) {
 // });
 // $link = mysql_connect('http://10.105.125.0:3306/', 'root', '1234');
 var con = mysql.createConnection('mysql://root:1234@10.105.125.0:3306/product_db');
+//var con = mysql.createConnection('mysql://root:@localhost/order_db');
 
-
-con.connect(function(err) {
+con.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
 });
@@ -69,15 +69,116 @@ con.connect(function(err) {
 app.get('/products', cors(), (req, res) => {
     var queryStr = "SELECT * FROM products WHERE 1";
     con.query(queryStr, function (error, result, fields) {
-        if(error){
+        if (error) {
             console.log(error);
+            res.send("not found");
         }
         //console.log("data" + JSON.stringify(data));
+        res.status(200);
         res.send(result);
+        //console.log(res);
+    });
+});
+
+app.get('/products/:id', cors(), (req, res) => {
+    const item = req.params.id;
+    const convertedItem = parseInt(item);
+    if(Number.isInteger(convertedItem)){
+        var queryStr = "SELECT * FROM products WHERE products.product_id = " + item;
+        con.query(queryStr, function (error, result, fields) {
+            if (error) {
+                console.log(error);
+                if(error.code == 'ER_BAD_FIELD_ERROR'){
+                    res.status(400);
+                    res.send("Bad request. Please check the data format of the product id.");
+                }
+                res.status(404);
+                res.send(error);
+            }
+            if(result.length > 0){
+                if(result){
+                    res.status(200);
+                    res.send(result);
+                }
+            }else{
+                res.status(404);
+                res.send("Not Found");
+            }
+
+        });
+    }
+    else{
+        res.status(400);
+        res.send("Bad request. Please check the data format of the product id.");
+    }
+
+});
+
+app.post('/products', cors(), (req, res) => {
+    const obj = req.body;
+    console.log(obj);
+    var queryStr = "INSERT INTO products (product_name, price, quantity, product_image) VALUES ('" + obj.product_name + "', '" + obj.price + "', '" + obj.quantity + "', '" + obj.product_image + "')";
+    con.query(queryStr, function (error, result, fields) {
+        if (error) {
+            console.log(error);
+            res.status(400);
+            res.send("Bad request");
+        }
+        //console.log("data" + JSON.stringify(data));
+        if(result.length > 0){
+            res.status(201);
+            res.send("location: /products/");
+        }else{
+            res.status(204);
+            res.send("No content created");
+        }
+
+        //console.log(res);
     });
 });
 
 
+app.delete('/products/:id', cors(), (req, res) => {
+    const item = req.params.id;
+    var queryStr = "DELETE FROM products WHERE products.product_id = " + item;
+    con.query(queryStr, function (error, result, fields) {
+        if (error) {
+            console.log(error);
+        }
+        //console.log("data" + JSON.stringify(data));
+        if(result.length > 0){
+                res.status(200);
+                res.send("Successfully deleted");
+        }else{
+            res.status(404);
+            res.send("Not found");
+        }
+
+        //console.log(res);
+    });
+});
+
+app.get('/test', cors(), (req, res) => {
+    res.send("hellow hellow ");
+    console.log('hellow hellow hellow');
+});
+
+
+app.put('/products/:id', cors(), (req, res) => {
+    const obj = req.body;
+    const item = req.params.id;
+    console.log(obj);
+    var queryStr = "UPDATE products SET product_name = '" + obj.product_name + "', price = '" + obj.price + "', quantity= '" + obj.quantity + "', product_image= '" + obj.product_image + "' WHERE product_id='"+item+"'";
+    con.query(queryStr, function (error, result, fields) {
+        if (error) {
+            console.log(error);
+        }
+        //console.log("data" + JSON.stringify(data));
+        res.status(200);
+        res.send("Content updated");
+        //console.log(res);
+    });
+});
 
 
 app.listen(port, () => {
