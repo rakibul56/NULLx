@@ -1,0 +1,12 @@
+body {
+  background-color: white;
+}
+
+.text {
+  float: inline-end;
+  color: red;
+}
+
+style {
+  color: red;
+}
