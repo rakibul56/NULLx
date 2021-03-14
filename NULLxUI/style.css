@@ -1,12 +1,44 @@
 body {
+  position: relative;
   background-color: white;
 }
 
 .text {
-  float: inline-end;
   color: red;
 }
 
 style {
   color: red;
+}
+h2 {
+  background-color: royalblue;
+}
+
+.container-fluid {
+  color: #f1f1f1;
+  max-width: auto;
+
+  overflow: auto;
+}
+
+#s1 {
+  padding: 2rem;
+  background-color: #f1f1f1;
+}
+#s2 {
+  padding: 2rem;
+}
+
+#image1 {
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+}
+
+#head {
+  padding: 2rem;
+}
+
+#fot {
+  align-items: center;
 }
