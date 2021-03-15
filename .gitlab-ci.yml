@@ -2,7 +2,7 @@ image: docker:latest
 
 before_script:
   - docker info
-  - docker login -u gitlab-ci-token -p "U7szaoALmWtJh5YVYFCs" "$CI_REGISTRY"
+  - docker login -u gitlab-ci-token -p "U7szaoALmWtJh5YVYFCs" $CI_REGISTRY
 
 services:
   - docker:18.09.1-dind
@@ -12,6 +12,6 @@ build:
   only:
     - master
   script:
-    - docker build -t "$CI_REGISTRY_IMAGE:latest" inventoryservice/.
-    - docker push "$CI_REGISTRY_IMAGE:latest"
+    - docker build -t productimage:latest inventoryservice/.
+    - docker push productimage:latest
 
