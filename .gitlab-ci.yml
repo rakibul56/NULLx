@@ -11,7 +11,6 @@ build:
   only:
     - master
   script:
-    - docker build -t meshudn/inventoryservice inventoryservice/.
-    - docker tag meshudn/inventoryservice docker-registry:5000/inventoryservice
-    - docker push docker-registry:5000/inventoryservice
+    - docker build -t productservice inventoryservice/.
+    - docker push productservice
     
