@@ -2,7 +2,7 @@ image: docker:latest
 
 before_script:
   - docker info
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY  
+  - docker login -u 'meshudn' -p 'vortex1!@' 'docker-registry:5000'  
 
 services:
   - docker:18.09.1-dind
@@ -13,4 +13,5 @@ build:
     - master
   script:
     - docker build -t productservice inventoryservice/.
-    - docker push productservice
+    - docker tag productservice docker-registry:5000/productservice
+    - docker push docker-registry:5000/productservice
