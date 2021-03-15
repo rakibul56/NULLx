@@ -2,7 +2,7 @@ image: docker:latest
 
 before_script:
   - docker info
-  - docker login -u 'meshudn' -p 'vortex1!@' 'docker-registry:5000'  
+  - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" "$CI_REGISTRY"
 
 services:
   - docker:18.09.1-dind
@@ -12,6 +12,6 @@ build:
   only:
     - master
   script:
-    - docker build -t productservice inventoryservice/.
-    - docker tag productservice docker-registry:5000/productservice
-    - docker push docker-registry:5000/productservice
+    - docker build -t "$CI_REGISTRY_IMAGE:latest" inventoryservice/.
+    - docker push "$CI_REGISTRY_IMAGE:latest"
+
