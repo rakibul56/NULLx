@@ -1,13 +1,15 @@
 image: docker:latest
-services:
-  - docker:dind
 
-stages:
-  - build
-  - integration-test
-  - pre-dev-deploy
-  - dev-deploy
-  - continue-to-prod
-  - pre-prod-deploy
-  - prod-deploy
-  - post-deploy
+before_script:
+  - docker info  
+
+services:
+  - docker:18.09.1-dind
+
+build:
+  stage: build
+  only:
+    - master
+  script:
+    - docker build -t productservice inventoryservice/.
+    - docker push productservice
