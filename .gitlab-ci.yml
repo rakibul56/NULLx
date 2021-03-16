@@ -11,7 +11,6 @@ build:
   only:
     - master
   script:
-    - docker build -t productimage:latest inventoryservice/.
-    - docker tag productimage:latest vsr-kub005.informatik.tu-chemnitz.de:31000/productimage:latest
-    - docker push vsr-kub005.informatik.tu-chemnitz.de:31000/productimage
+    - docker build -t productimage:latest event-bus/.
+   
 
