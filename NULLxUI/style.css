@@ -15,10 +15,11 @@ h2 {
 }
 
 .container-fluid {
-  color: #f1f1f1;
-  max-width: auto;
+ 
+ width: 100%;
+ height: auto;
 
-  overflow: auto;
+ 
 }
 
 #s1 {
@@ -37,6 +38,10 @@ h2 {
 
 #head {
   padding: 2rem;
+  background-color: #1c83a5;
+  width: 100%;
+  height: auto;
+  
 }
 
 #fot {
