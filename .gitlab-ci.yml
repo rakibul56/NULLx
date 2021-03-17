@@ -1,38 +1,16 @@
-image: alpine:latest
+image: docker:latest
 
-variables:
-  # KUBE_INGRESS_BASE_DOMAIN is the application deployment domain and should be set as a variable at the group or project level.
-  # KUBE_INGRESS_BASE_DOMAIN: domain.example.com
+before_script:
+  - docker info
 
-  POSTGRES_USER: user
-  POSTGRES_PASSWORD: testing-password
-  POSTGRES_ENABLED: "true"
-  POSTGRES_DB: $CI_ENVIRONMENT_SLUG
+services:
+  - docker:18.09.1-dind
 
-  DOCKER_DRIVER: overlay2
-
-  ROLLOUT_RESOURCE_TYPE: deployment
-
-  DOCKER_TLS_CERTDIR: ""  # https://gitlab.com/gitlab-org/gitlab-runner/issues/4501
-
-stages:
-  - build
-  - test
-  - deploy  # dummy stage to follow the template guidelines
-  - review
-  - dast
-  - staging
-  - canary
-  - production
-  - incremental rollout 10%
-  - incremental rollout 25%
-  - incremental rollout 50%
-  - incremental rollout 100%
-  - performance
-  - cleanup
-
-
-include:
-  - template: Jobs/Build.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Build.gitlab-ci.yml
-  - template: Jobs/Test.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Test.gitlab-ci.yml
- 
+build:
+  stage: build
+  only:
+    - master
+  script:
+    - docker build -t productimage:latest inventoryservice/.
+    - docker tag productimage:latest vsr-kub005.informatik.tu-chemnitz.de:31000/productimage:latest
+    - docker push vsr-kub005.informatik.tu-chemnitz.de:31000/productimage
