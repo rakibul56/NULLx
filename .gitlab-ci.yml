@@ -1,17 +1,15 @@
-image: docker:latest
+stages:
+  -build
 
-before_script:
-  - docker info
-
-services:
-  - docker:18.09.1-dind
-
-build:
+docker-build:
+  image: docker:latest
   stage: build
-  only:
-    - master
-  script:
-    - docker build -t productimage:latest inventoryservice/.
-    - docker tag productimage:latest vsr-kub005.informatik.tu-chemnitz.de:31000/productimage:latest
-    - docker push vsr-kub005.informatik.tu-chemnitz.de:31000/productimage
+  services:
+    -docker:dind
+  
+  before_script:
+    -echo $CI_BUILD_TOKEN | docker login -u "$CI_REGISTRY_USER" --password-sydin $CI_REGISTRY
 
+  script:
+    -docker build --pull -t "$CI_REGISTRY_IMAGE" .
+    -docker push "$CI_REGISTRY_IMAGE"
