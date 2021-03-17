@@ -8,9 +8,13 @@ services:
 
 build:
   stage: build
+         
   only:
     - master
   script:
-    - docker build -t productimage:latest event-bus/.
+    - docker build -t event-bustimage:latest event-bus/.
+    - docker run -t event-busimage:latest event-bus/.
+    
+    
    
 
