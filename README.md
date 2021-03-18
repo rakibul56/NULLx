@@ -23,7 +23,7 @@ microservices](./architecture_.jpg)](./architecture_.jpg)
 | [orderhistoryService](./*)                           | Node.js       | Provides order history and product catelogues.                                      
 | [userInformationService](./*)                        | Java          | Provides user information and authenticate users. (*under_development)                                                            |
 | [reviewService](./*)                                 | C#            | Review service for the product. 
-| [rabbitMq](./*)                                      | Java          | Passing messages between services.
+| [rabbitMq](./*)                                      | JavaScript          | Passing messages between services.
   
 ## Microservice Patterns usages for development
 
@@ -33,8 +33,8 @@ microservices](./architecture_.jpg)](./architecture_.jpg)
   Most services need to persist data in some kind of database.
 - **[Saga Pattern](https://microservices.io/patterns/data/saga.html)**
   A saga is a sequence of local transactions. Each local transaction updates the database and publishes a message or event to trigger the next local transaction in the saga.
-- **[Command Query Responsibility Segregation (CQRS)](https://microservices.io/patterns/data/cqrs.html)**
-  The application keeps the replica up to data by subscribing to Domain events published by the service that own the data.
+- **[Api-composition pattern](https://microservices.io/patterns/data/api-composition.html)**
+  It's invoking the services that own the data and performs an in-memory join of the results.
 - **[Event sourcing Pattern](https://microservices.io/patterns/data/event-sourcing.html)**
   To reliably/atomically update the database and publish messages/events.
 - **[API Gateway / Backends for Frontends Pattern](https://microservices.io/patterns/apigateway.html)**
@@ -43,6 +43,25 @@ microservices](./architecture_.jpg)](./architecture_.jpg)
   To collaborate and communicate services in a microservice-based application.
 - **[Circuit Breaker Pattern](https://microservices.io/patterns/reliability/circuit-breaker.html)**
   To prevent a network or service failure from cascading to other services.
-- **[Kubernetes](https://kubernetes.io)**
-  The app is designed to run on Kubernetes (both locally on "Docker for
-  Desktop", as well as on the cloud).
+- **[Service Instance per container pattern](https://microservices.io/patterns/deployment/service-per-container.html)**
+  All the services as a (Docker) container image and deploy each service instance as a container in the kubernetes.
+
+
+
+--------------------------------------------------
+# Documentation
+
+## Reason for choosing RabbitMq:
+
+It has enormous feathers and is freely available, which will be a great option to implement messaging queues in our microservices architecture project in this planspiel. This messaging queues pattern helps us to keep other services persistent while communicating with them. RabbitMQ has a functionality to keep the queues in priority so that consumers can easily get high priority messages or tasks.
+For its huge ability and fulfill every requirement of us we choose this instead of others like Apache Kafka. Apache Kafka also is a great tool but for this project it is unnecessary to use other functionality which we do not need at all. Starting this lightweight RabbitMQ tool with huge functionality we can easily achieve our goals.
+
+## Reason for choosing database per service:
+
+For our project, We must ensure our application should be loosely coupled so that we can develop, deploy and scale it independently. Database per service gives us that opportunity to develop our application in such a way if we need to change one service database for example that it does not impact other services at all.
+
+“Different services have different data storage requirements. For some services, a relational database is the best choice. Other services might need a NoSQL database such as MongoDB, which is good at storing complex, unstructured data, or Neo4J, which is designed to efficiently store and query graph data.”[2]
+
+For those benefits, we found a database per service is the right choice for our application which is able to fulfill our every requirement.   
+
+

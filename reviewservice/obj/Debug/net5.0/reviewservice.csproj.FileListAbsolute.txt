@@ -1,0 +1,6 @@
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\net5.0\reviewservice.csprojAssemblyReference.cache
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\net5.0\reviewservice.GeneratedMSBuildEditorConfig.editorconfig
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\net5.0\reviewservice.AssemblyInfoInputs.cache
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\net5.0\reviewservice.AssemblyInfo.cs
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\net5.0\reviewservice.csproj.CoreCompileInputs.cache
+F:\PROJECTNULLx\nullx\nullx\reviewservice\obj\Debug\net5.0\reviewservice.MvcApplicationPartsAssemblyInfo.cache
