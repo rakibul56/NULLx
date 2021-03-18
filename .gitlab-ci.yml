@@ -1,9 +1,16 @@
-registry:
-  enabled: true
-  host: registry.gitlab.example.com
-  port: 5005
-  api_url: http://vsr-kub005.informatik.tu-chemnitz.de:5000/
-  key: config/registry.key
-  path: shared/registry
-  issuer: gitlab-issuer
+image: node
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - npm install
+    - docker build
+  artifacts:
+    paths:
+      - ./inventoryservice
 
