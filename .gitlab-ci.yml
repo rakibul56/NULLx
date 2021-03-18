@@ -5,16 +5,13 @@ before_script:
 
 services:
   - docker:18.09.1-dind
+  
 
 build:
   stage: build
-         
   only:
-    - master
+    - Event
   script:
-    - docker build -t event-bustimage:latest event-bus/.
-    - docker run -t event-busimage:latest event-bus/.
-    
-    
-   
-
+    - docker build -t productimage:latest inventoryservice/.
+    - docker tag productimage:latest vsr-kub005.informatik.tu-chemnitz.de:31000/productimage:latest
+    - docker push docker-registry:5000/productimage:latest
