@@ -1,16 +1,34 @@
-image: node
-
 stages:
-  - build
+  - quality
   - test
+  - build
   - deploy
+
+image: node:10
+
+services:
+  - mongo
+  - docker:dind
+
+before_script:
+- npm install
+
+quality:
+  stage: quality
+  script:
+  - npm run-script lint
+
+test:
+  stage: test
+  script:
+  - npm run-script test
 
 build:
   stage: build
   script:
-    - npm install
-    - docker build
-  artifacts:
-    paths:
-      - ./inventoryservice
+  - docker build -t server .
 
+deploy:
+  stage: deploy
+  script:
+  - echo "TODO deploy push docker image"
