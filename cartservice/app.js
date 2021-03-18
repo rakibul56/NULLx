@@ -73,7 +73,7 @@ app.post('/carts/:id', (req, res) => {
                 durable: false
             });
 
-            channel.sendToQueue(queue, Buffer.from(msg));
+            channel.sendToQueue(cartItemSearchQueue, Buffer.from(msg));
             console.log(" [x] Sent %s", msg);
 
             /*
@@ -84,11 +84,11 @@ app.post('/carts/:id', (req, res) => {
             var msg2 = "899";
             msg2 = JSON.stringify(msg2);
 
-            channel.assertQueue(queue2, {
+            channel.assertQueue(cartaddedQueue, {
                 durable: false
             });
 
-            channel.sendToQueue(queue2, Buffer.from(msg2));
+            channel.sendToQueue(cartaddedQueue, Buffer.from(msg2));
             console.log(" [x] Sent %s", msg2);
 
             /*
@@ -135,6 +135,8 @@ app.post('/carts/:id', (req, res) => {
                     //console.log(" [x] Received %s", msg.content.toString());
                     let msg_json = JSON.parse(msg.content);
                     console.log("msg: " + msg_json.name);
+                    res.status(200);
+                    res.send("request accepted");
                 }
                 , {
                     noAck: true
