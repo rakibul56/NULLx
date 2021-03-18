@@ -13,5 +13,5 @@ build:
     - Event
   script:
     - docker build -t productimage:latest inventoryservice/.
-    - docker tag productimage:latest vsr-kub005.informatik.tu-chemnitz.de:31000/productimage:latest
+    - docker tag productimage:latest docker-registry:5000/productimage:latest
     - docker push docker-registry:5000/productimage:latest
