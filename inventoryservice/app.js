@@ -3,42 +3,99 @@ const app = express();
 const port = process.env.PORT || 3003;
 var mysql = require('mysql');
 const cors = require('cors');
-var bodyParser = require('body-parser')
-var amqp = require('amqplib/callback_api');
+var bodyParser = require('body-parser');
 
 app.use(cors());
 app.use(bodyParser.json());
-/*
-var amqp = require('amqplib/callback_api');
 
-amqp.connect('amqp://localhost', function(error0, connection) {
+var amqp = require('amqplib/callback_api');
+const amqp_url = 'amqp://localhost'; //for local environment
+//const amqp_url = 'amqp://localhost'; //for server
+
+function cartItemSearchResultMethod(){
+    amqp.connect(amqp_url, function (error0, connection) {
+        if (error0) {
+            throw error0;
+        }
+
+        /*
+        * Channel for Sending Data
+        * */
+        connection.createChannel(function (error1, channel) {
+            if (error1) {
+                throw error1;
+            }
+
+            var cartItemSearchQueue = 'cartItemSearchResult';
+
+            var msg = {product_id: '2', quantity: '2'};
+            msg = JSON.stringify(msg);
+
+            channel.assertQueue(cartItemSearchQueue, {
+                durable: false
+            });
+            channel.sendToQueue(cartItemSearchQueue, Buffer.from(msg));
+            console.log(" [x] Sent %s", msg);
+
+        }); /* ending of channel for sending data */
+
+    });
+}
+
+amqp.connect(amqp_url, function (error0, connection) {
     if (error0) {
         throw error0;
     }
-    connection.createChannel(function(error1, channel) {
+    /*
+    * Channel for consuming Data
+    * */
+    connection.createChannel(function (error1, channel) {
         if (error1) {
             throw error1;
         }
 
-        var queue = 'orderqueue';
-
+        var queue = 'cartItemSearch';
         channel.assertQueue(queue, {
             durable: false
         });
 
-        console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
+        channel.consume(queue, function (msg) {
+                //console.log(" [x] Received %s", msg.content.toString());
+                let msg_json = JSON.parse(msg.content);
+                console.log("Event 1: " + msg_json.product_id);
 
-        channel.consume(queue, function(msg) {
-            console.log(" [x] Received %s", msg.content.toString());
-            if(msg.content.toString() === "order"){
-                console.log("new database rule set");
+                cartItemSearchResultMethod();
             }
-        }, {
-            noAck: true
+            , {
+                noAck: true
+            });
+
+        /*
+    * Event 2
+    * cart added
+    * operation: Delete product quantity from the product database
+    * */
+        var queue = 'cartadded';
+        channel.assertQueue(queue, {
+            durable: false
         });
+
+        channel.consume(queue, function (msg) {
+                //console.log(" [x] Received %s", msg.content);
+                var msg_json = JSON.parse(msg.content);
+                console.log("Event 2: " + msg_json);
+
+
+            }
+            , {
+                noAck: true
+            });
     });
+
+
+
 });
-*/
+
 // if(process.env.DATABASENAME && process.env.HOSTNAME && process.env.USERDB && process.env.PASSWORDDB){
 //     $databasename = process.env.DATABASENAME;
 //     $hostname = process.env.HOSTNAME;
