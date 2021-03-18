@@ -1,19 +1,9 @@
-image: node:latest
-
-stages:
-  - build
-  - test
-
-cache:
-  paths:
-    - node_modules/
-
-install_dependencies:
-  stage: build
-  script:
-    - npm install
-  artifacts:
-    paths:
-      - node_modules/
-
+registry:
+  enabled: true
+  host: registry.gitlab.example.com
+  port: 5000
+  api_url: http://localhost:5000/
+  key: config/registry.key
+  path: shared/registry
+  issuer: gitlab-issuer
 
