@@ -52,6 +52,9 @@ app.post('/carts/',(req,res) => {
     res.status(403);
     //res.send("Bad request. Please check the cart ID.");
 });
+
+
+
 app.post('/carts/:id', (req, res) => {
     const cart_id = req.params.id;
     const obj = req.body;
@@ -81,7 +84,7 @@ app.post('/carts/:id', (req, res) => {
             * */
             var cartaddedQueue = 'cartadded';
 
-            var msg2 = "899";
+            var msg2 = { product_id: cart_id, quantity: obj.quantity};
             msg2 = JSON.stringify(msg2);
 
             channel.assertQueue(queue2, {
@@ -91,25 +94,7 @@ app.post('/carts/:id', (req, res) => {
             channel.sendToQueue(queue2, Buffer.from(msg2));
             console.log(" [x] Sent %s", msg2);
 
-            /*
-        * Consuming the response from inventory service
-        * Event Name: cart Item search
-        * Event response Name: Result of Cart Item Search
-        * response: Yes / No (Json)
-        * */
-            var cartItemSearchResultQueue = 'cartItemSearchResult';
-            channel.assertQueue(cartItemSearchResultQueue, {
-                durable: false
-            });
 
-            channel.consume(cartItemSearchResultQueue, function(msg) {
-                    //console.log(" [x] Received %s", msg.content.toString());
-                    let msg_json = JSON.parse(msg.content);
-                    console.log("msg: " + msg_json.name);
-                }
-                , {
-                    noAck: true
-                });
         });
 
         /*
@@ -134,7 +119,30 @@ app.post('/carts/:id', (req, res) => {
             channel.consume(cartItemSearchResultQueue, function(msg) {
                     //console.log(" [x] Received %s", msg.content.toString());
                     let msg_json = JSON.parse(msg.content);
-                    console.log("msg: " + msg_json.name);
+                    console.log("response Event (cart item search result): " + msg_json.name);
+
+                    if(msg_json.product_id == obj.product_id && msg_json.quantity == obj.quantity){
+                            mongoClient.connect(url, function(err, db) {
+                                if (err) throw err;
+                                var myobj = { product_id: obj.product_id, quantity: obj.quantity, cart_id: cart_id };
+                                var dbo = db.db("cart_db");
+                                dbo.collection("carts").insertOne(myobj, function(err, response) {
+                                    if (err) {
+                                        res.status(500);
+                                        //res.send(err);
+                                    }else{
+                                        console.log("1 document inserted");
+                                        res.status(201);
+                                        res.send(response);
+                                        db.close();
+                                    }
+                                });
+                            });
+                        }
+                        else {
+                            res.status(403);
+                            //res.send("Bad request. Please check the cart ID.");
+                        }
                 }
                 , {
                     noAck: true
@@ -143,28 +151,7 @@ app.post('/carts/:id', (req, res) => {
         });
     });
 
-    /*if(cart_id !== null) {
-        mongoClient.connect(url, function(err, db) {
-            if (err) throw err;
-            var myobj = { product_id: obj.product_id, quantity: obj.quantity, cart_id: cart_id };
-            var dbo = db.db("cart_db");
-            dbo.collection("carts").insertOne(myobj, function(err, response) {
-                if (err) {
-                    res.status(500);
-                    //res.send(err);
-                }else{
-                    console.log("1 document inserted");
-                    res.status(201);
-                    res.send(response);
-                    db.close();
-                }
-            });
-        });
-    }
-    else {
-        res.status(403);
-        //res.send("Bad request. Please check the cart ID.");
-    }*/
+
 });
 
 // get all the cart items
