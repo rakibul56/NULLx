@@ -14,5 +14,5 @@ build:
   script:
     - docker build -t productimage:latest inventoryservice/.
     - docker tag productimage:latest vsr-kub005.informatik.tu-chemnitz.de:5000/productimage:latest
-    - docker push vsr-kub005.informatik.tu-chemnitz.de:500/productimage:latest
+    - docker push vsr-kub005.informatik.tu-chemnitz.de:5000/productimage:latest
     
