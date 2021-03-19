@@ -12,6 +12,6 @@ build:
   only:
     - Event
   script:
-    - docker build -t productimage:latest inventoryservice/.
-    - docker tag productimage:latest localhost:5000/productimage:latest
-    - docker push localhost:5000/productimage:latest
+    - docker pull ubuntu:16.04
+    - docker tag ubuntu:16.04 localhost:5000/my-ubuntu
+    - docker push localhost:5000/my-ubuntu
