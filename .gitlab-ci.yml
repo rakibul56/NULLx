@@ -13,6 +13,6 @@ build:
     - Event
   script:
     - docker build -t productimage:latest inventoryservice/.
-    - docker tag productimage:latest 127.0.0.1:5000:5000/productimage:latest
-    - docker push 127.0.0.1:5000:5000/productimage:latest
+    - docker tag productimage:latest 127.0.0.1:5000/productimage:latest
+    - docker push 127.0.0.1:5000/productimage:latest
 
