@@ -12,5 +12,6 @@ build:
   only:
     - Event
   script:
+    -docker build -t hello-world
     - docker tag hello-world vsr-kub005.informatik.tu-chemnitz.de:5000/hello-world
     - docker push vsr-kub005.informatik.tu-chemnitz.de:5000/hello-world
