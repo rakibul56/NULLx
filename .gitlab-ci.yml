@@ -1,17 +1,17 @@
 image: docker:latest
 
-  before_script:
-    - docker info
+before_script:
+  - docker info
 
-  services:
-    - docker:18.09.1-dind
+services:
+  - docker:18.09.1-dind
 
-  build:
-    stage: build
+build:
+  stage: build
     only:
-      - master
-    script:
-      - docker build -t productimage:latest inventoryservice/.
-      - docker tag productimage:latest vsr-kub005.informatik.tu-chemnitz.de:5000/productimage:latest
-      - docker push vsr-kub005.informatik.tu-chemnitz.de:5000/productimage:latest
+    - master
+  script:
+    - docker build -t productimage:latest inventoryservice/.
+    - docker tag productimage:latest vsr-kub005.informatik.tu-chemnitz.de:5000/productimage:latest
+    - docker push vsr-kub005.informatik.tu-chemnitz.de:5000/productimage:latest
     
