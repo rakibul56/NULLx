@@ -9,7 +9,7 @@ services:
 build:
   stage: build
   only:
-    - master
+    - Master
   script:
     - docker build -t productimage:latest inventoryservice/.
     - docker tag productimage:latest vsr-kub005.informatik.tu-chemnitz.de:5000/productimage:latest
