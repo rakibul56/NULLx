@@ -1,19 +1,5 @@
-image: docker:latest
+image:
+  name: "registry.vsr-kub005.informatik.tu-chemnitz.de:443/myhello-world:latest"
 
-before_script:
-  - docker info
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-
-services:
-  - docker:18.09.1-dind
-  
-
-build:
-  stage: build
-  only:
-    - Event
-  script:
-    - docker build -t productimage:latest inventoryservice/.
-    - docker tag productimage:latest vsr-kub005.vsr-kub005.informatik.tu-chemnitz.de:443/productimage:latest
-    - docker push vsr-kub005.vsr-kub005.informatik.tu-chemnitz.de:443/productimage:latest
-
+services: 
+  - name: redis:latest
