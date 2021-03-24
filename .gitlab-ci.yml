@@ -1,8 +1,16 @@
-image:
-  name: "registry.vsr-kub005.informatik.tu-chemnitz.de:443/myhello-world:latest"
+image: docker:latest
 
-services: 
-  - name: redis:latest
+before_script:
+  - docker info
 
-script:
-   - docker build -t myhello-world:latest
+services:
+  - docker:18.09.1-dind
+
+build:
+  stage: build
+  only:
+    - master
+  script:
+    - docker build -t productimage:latest inventoryservice/.
+    - docker tag productimage:latest rakibul56/productimage:latest
+    - docker push rakibul56/productimage:latest
