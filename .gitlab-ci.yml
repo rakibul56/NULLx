@@ -11,8 +11,7 @@ build:
   only:
     - master
   script:
-    - docker pull nginx
-    - docker tag docker.io/nginx vsr-kub005.vsr-kub005.informatik.tu-chemnitz.de:t:5000/mynginx
-    - docker push vsr-kub005.vsr-kub005.informatik.tu-chemnitz.de::5000/mynginx
-  
+    - docker build -t productimage:latest inventoryservice/.
+    - docker tag productimage:latest vsr-kub005.informatik.tu-chemnitz.de:5000/productimage:latest
+
     
