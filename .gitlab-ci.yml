@@ -12,5 +12,5 @@ build:
     - master
   script:
     - docker build -t productimage:latest inventoryservice/.
-    - docker tag productimage:latest meshudn/productimage:latest
-    - docker push meshudn/productimage:latest
+    - docker tag productimage:latest rakibul56/productimage:latest
+    - docker push rakibul56/productimage:latest
