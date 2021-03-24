@@ -3,3 +3,6 @@ image:
 
 services: 
   - name: redis:latest
+
+script:
+   - docker build -t myhello-world:latest
