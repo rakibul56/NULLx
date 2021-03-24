@@ -12,12 +12,11 @@ var amqp = require('amqplib/callback_api');
 const amqp_url = 'amqp://localhost'; //for local environment
 //const amqp_url = 'amqp://localhost'; //for server
 
-function cartItemSearchResultMethod(){
+function cartItemSearchResultMethod(hasEnoughQuantity) {
     amqp.connect(amqp_url, function (error0, connection) {
         if (error0) {
             throw error0;
         }
-
         /*
         * Channel for Sending Data
         * */
@@ -28,7 +27,7 @@ function cartItemSearchResultMethod(){
 
             var cartItemSearchQueue = 'cartItemSearchResult';
 
-            var msg = {product_id: '2', quantity: '2'};
+            var msg = {hasEnoughQuantity: hasEnoughQuantity};
             msg = JSON.stringify(msg);
 
             channel.assertQueue(cartItemSearchQueue, {
@@ -64,7 +63,21 @@ amqp.connect(amqp_url, function (error0, connection) {
                 let msg_json = JSON.parse(msg.content);
                 console.log("Event 1: " + msg_json.product_id);
 
-                cartItemSearchResultMethod();
+                var queryStr = "SELECT * FROM products WHERE product_id = '" + msg_json.product_id + "'";
+                con.query(queryStr, function (error, result, fields) {
+                    if (error) {
+                        console.log(error);
+                        cartItemSearchResultMethod(false);
+                    }
+                    if (result.length > 0) {
+                        //console.log("data" + JSON.stringify(data));
+                        cartItemSearchResultMethod(true);
+                    } else {
+                        cartItemSearchResultMethod(false);
+                    }
+                });
+
+
             }
             , {
                 noAck: true
@@ -85,15 +98,45 @@ amqp.connect(amqp_url, function (error0, connection) {
                 var msg_json = JSON.parse(msg.content);
                 console.log("Event 2: " + msg_json);
 
-
             }
             , {
                 noAck: true
             });
+
+        /*
+        * Consuming Event
+        * Queue: cartDeletedByUser
+        * */
+        var cartDeletedByUser = 'cartDeletedByUser';
+        /*channel.assertQueue(queue, {
+            durable: false
+        });
+
+        channel.consume(cartDeletedByUser, function (msg) {
+                //console.log(" [x] Received %s", msg.content.toString());
+                let msg_json = JSON.parse(msg.content);
+                console.log("Event cartDeletedByUser: " + msg_json.product_id);
+
+                var queryStr = "UPDATE products SET quantity= quentity + '" + msg_json.quantity + "' WHERE product_id='" + item + "'";
+                con.query(queryStr, function (error, result, fields) {
+                    if (error) {
+                        console.log(error);
+                        cartItemSearchResultMethod(false);
+                    }
+                    if (result.length > 0) {
+                        //console.log("data" + JSON.stringify(data));
+                        cartItemSearchResultMethod(true);
+                    } else {
+                        cartItemSearchResultMethod(false);
+                    }
+                });
+
+
+            }
+            , {
+                noAck: true
+            });*/
     });
-
-
-
 });
 
 // if(process.env.DATABASENAME && process.env.HOSTNAME && process.env.USERDB && process.env.PASSWORDDB){
@@ -139,60 +182,56 @@ app.get('/products', cors(), (req, res) => {
 
 app.get('/products/:id', cors(), (req, res) => {
     const item = req.params.id;
-    console.log("is number: "+ !isNaN(item));
-    if(!isNaN(item)){
-        var queryStr = "SELECT * FROM products WHERE products.product_id = " + item ;
+    console.log("is number: " + !isNaN(item));
+    if (!isNaN(item)) {
+        var queryStr = "SELECT * FROM products WHERE products.product_id = " + item;
         con.query(queryStr, function (error, result, fields) {
             if (error) {
                 console.log(error);
-                if(error.code == 'ER_BAD_FIELD_ERROR'){
+                if (error.code == 'ER_BAD_FIELD_ERROR') {
                     res.status(400);
                     res.send("Bad request. Please check the data format of the product id.");
                 }
                 res.status(404);
                 res.send("Please check the requested path. Or bad request can not proceed");
             }
-            if(result.length > 0){
-                if(result){
+            if (result.length > 0) {
+                if (result) {
                     res.status(200);
                     res.send(result);
                 }
-            }else{
+            } else {
                 res.status(404);
                 res.send("Not Found");
             }
 
         });
-    }
-
-    else if(typeof item === 'string'){
-        console.log("search key: "+item);
-        var queryStr = "SELECT * FROM products WHERE products.quantity LIKE '" + item + "%' OR products.price LIKE '"+ item +"%' OR products.product_name LIKE '"+ item + "%'";
+    } else if (typeof item === 'string') {
+        console.log("search key: " + item);
+        var queryStr = "SELECT * FROM products WHERE products.quantity LIKE '" + item + "%' OR products.price LIKE '" + item + "%' OR products.product_name LIKE '" + item + "%'";
         con.query(queryStr, function (error, result, fields) {
             if (error) {
                 console.log(error);
-                if(error.code == 'ER_BAD_FIELD_ERROR'){
+                if (error.code == 'ER_BAD_FIELD_ERROR') {
                     res.status(400);
                     res.send("Bad request. Please check the data format of the product id.");
                 }
                 res.status(404);
                 res.send("Please check the requested path. Or bad request can not proceed");
             }
-            if(result.length > 0){
-                if(result){
+            if (result.length > 0) {
+                if (result) {
                     res.status(200);
                     res.send(result);
                 }
-            }else{
-                console.log("not found: "+ result);
+            } else {
+                console.log("not found: " + result);
                 res.status(404);
                 res.send("Not Found");
             }
 
         });
-    }
-
-    else{
+    } else {
         res.status(400);
         res.send("Bad request. Please check the data format of the product id.");
     }
@@ -211,7 +250,7 @@ app.post('/products', cors(), (req, res) => {
             res.send("Bad request");
         }
         //console.log("data" + JSON.stringify(data));
-        if(result){
+        if (result) {
             res.status(201);
             res.send("location: /products/" + result.insertId);
         }
@@ -229,10 +268,10 @@ app.delete('/products/:id', cors(), (req, res) => {
             res.send("Bad request. Please check your requested path.");
         }
         //console.log("data" + JSON.stringify(data));
-        if(result.length > 0){
-                res.status(200);
-                res.send("Successfully deleted");
-        }else{
+        if (result.length > 0) {
+            res.status(200);
+            res.send("Successfully deleted");
+        } else {
             res.status(404);
             res.send("Not found");
         }
@@ -251,7 +290,7 @@ app.put('/products/:id', cors(), (req, res) => {
     const obj = req.body;
     const item = req.params.id;
     console.log(obj);
-    var queryStr = "UPDATE products SET product_name = '" + obj.product_name + "', price = '" + obj.price + "', quantity= '" + obj.quantity + "', product_image= '" + obj.product_image + "' WHERE product_id='"+item+"'";
+    var queryStr = "UPDATE products SET product_name = '" + obj.product_name + "', price = '" + obj.price + "', quantity= '" + obj.quantity + "', product_image= '" + obj.product_image + "' WHERE product_id='" + item + "'";
     con.query(queryStr, function (error, result, fields) {
         if (error) {
             console.log(error);
@@ -269,8 +308,3 @@ app.put('/products/:id', cors(), (req, res) => {
 app.listen(port, () => {
     console.log(`Inventory Service listening at http://localhost:${port}`)
 });
-
-
-
-
-
