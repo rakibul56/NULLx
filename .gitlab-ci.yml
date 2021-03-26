@@ -11,6 +11,6 @@ build:
   only:
     - master
   script:
-    - docker build -t productimage:latest inventoryservice/.
-    - docker tag productimage:latest meshudn/productimage:latest
-    - docker push meshudn/productimage:latest
+    - docker build -t frontend:latest frontend/.
+    - docker tag frontend:latest meshudn/frontend:latest
+    - docker push meshudn/frontend:latest
