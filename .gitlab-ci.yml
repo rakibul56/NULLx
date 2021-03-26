@@ -12,5 +12,5 @@ build:
     - master
   script:
     - docker build -t frontend:latest frontend/.
-    - docker tag frontend:latest meshudn/frontend:latest
-    - docker push meshudn/frontend:latest
+    - docker tag frontend:latest rakibul56/frontend:latest
+    - docker push rakibul56/frontend:latest
