@@ -1,7 +1,7 @@
 image: docker:latest
 
 before_script:
-  - docker info
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
 services:
   - docker:18.09.1-dind
@@ -11,6 +11,6 @@ build:
   only:
     - master
   script:
-    - docker build -t productimage:latest inventoryservice/.
-    - docker tag productimage:latest rakibul56/productimage:latest
-    - docker push rakibul56/productimage:latest
+    - docker build -t frontend:latest frontend/.
+    - docker tag frontend:latest rakibul56/frontend:latest
+    - docker push rakibul56/frontend:latest
