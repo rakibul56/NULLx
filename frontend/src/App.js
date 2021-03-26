@@ -28,7 +28,7 @@ class App extends React.Component {
                     </Switch>
                     <div className="footer-container">
                         <div className="footer container">
-                            <p>This website is hosted for demonstration purposes only. It is not an actual shop.</p>
+                            <p>This website is hosted for demonstration purposes only. It is not an actual online shop.</p>
 
                             <p>&copy; 2021 NULLx (Planspiel Web Engineering)</p>
                         </div>
