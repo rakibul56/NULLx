@@ -14,3 +14,12 @@ build:
     - docker build -t frontend:latest frontend/.
     - docker tag frontend:latest rakibul56/frontend:latest
     - docker push rakibul56/frontend:latest
+
+test:
+  stage: test
+  only:
+    - master
+  script:
+    - docker build -t frontend:latest frontend/.
+    - docker tag frontend:latest rakibul56/frontend:latest
+    - docker push rakibul56/frontend:latest
