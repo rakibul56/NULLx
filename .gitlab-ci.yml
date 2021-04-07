@@ -12,18 +12,6 @@ build:
     - master
   script:
     - docker build -t frontend:latest frontend/.
-    
-
-test:
-  stage: test
-  only:
-    - master
-  script:
     - docker tag frontend:latest rakibul56/frontend:latest
-deploy:
-  stage: deploy
-  only:
-    - master
-  script:
     - docker push rakibul56/frontend:latest
    
