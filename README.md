@@ -5,6 +5,65 @@ Homepage Link (Webshops): http://vsr-kub005.informatik.tu-chemnitz.de:30002/
 
 Teaching UI link: https://nullx-de.github.io/home/NULLxUI/ 
 
+# Installation
+1. Go to your Virtual Machine or Minikube. 
+
+2. Clone this repository.
+
+```
+git clone https://github.com/NULLx-de/WebShops-deployment.git
+cd WebShops-deployment
+```
+
+2. Deploy MySQL Database to the cluster. 
+```
+kubectl apply -f mysql-secret.yaml
+kubectl apply -f mysql-persistentVolumeClaim.yaml
+kubectl apply -f mysql-deployment.yaml
+```
+3. Deploy MongoDB Database to the cluster. 
+```
+kubectl apply -f mongo-secret.yaml
+kubectl apply -f mongo_server_configmap.yaml
+kubectl apply -f mongodb-deployment.yaml
+```
+
+4. Deploy microservices of WebShops to the cluster.
+
+```
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f inventory-deployment.yaml
+kubectl apply -f cartservice-deployment.yaml
+kubectl apply -f order-service.yaml
+kubectl apply -f shipping-deployment.yaml
+```
+
+5. Wait for the Pods to be ready.
+
+```
+kubectl get pods
+```
+
+After a few minutes, you should see:
+
+```
+NAME                                     READY   STATUS    RESTARTS   AGE
+cartservice-66d497c6b7-dp5jr             3/3     Running   0          2m59s
+frontend-6b8d69b9fb-wjqdg                3/3     Running   0          3m1s
+shipping-68596d6dd6-bf6bv                3/3     Running   0          3m
+inventory-557d474574-888kr               3/3     Running   0          3m1s
+orderservice-69c56b74d4-7z8r5            3/3     Running   0          3m4s
+mysql-6ccc89f8fd-v686r                   1/1     Running   0          4m58s
+mongo-6ccc89f8fd-v686r                   1/1     Running   0          5m58s
+```
+
+6. Access the web frontend in a browser using the frontend's `EXTERNAL_IP`.
+
+```
+kubectl get service frontend-microservice | awk '{print $4}'
+```
+
+
 ## Architecture
 
 **Webshop** is composed of * microservices written in different
