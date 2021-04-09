@@ -79,7 +79,7 @@ The WebShops is composed of a set of microservices written in different
 languages that talk to each other via events, REST API.
 
 [![Architecture of
-microservices](./doc/architecture.jpg)](./architecture_.jpg)
+microservices](./doc/architecture.png)](./doc/architecture.png)
 
 
 | Service                                              | Language      | Description                                                                                                                       |
