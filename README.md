@@ -129,6 +129,35 @@ Database per service gives us that opportunity to develop WebShops in such a way
 
 WebShops has loosely coupled microservices therefore it is hard to get the join data from multiple services. To solve the problem, we used the CQRS pattern. WebShops has a dedicated microservice called Order History Service which is responsible for providing order data to the end-user. It stores data from Inventory service and Order service in a Read-only database thus, command and query operation segregated into other services which lead to developing a more sophisticated loosely coupled microservice system. 
 
+## Challenges
+During our project in microservices demonstration, we have faced a lot more challenges in the implementation phase some of them are.
+
+### Environment Setup And Installation
+
+Initially, we need a perfect environment setup for our project development. We have four virtual machines which were given by our university. It was a challenge for us to set up our four virtual machines correctly. Firstly, we have installed Docker in each of our VM with the exact version of it. Then we installed Kubernetes which were more difficult, we found while installing. We created one master node and three worker nodes which are connected through an IP address with the master node. We also installed a load balancer in the master node which is responsible for service request call via REST API. For integrating and managing every updated data in every service we mount an event bus(RabbitMQ) in our VM.
+
+### Data Management
+
+The main challenge we have faced in our project is database management and its consistency. For making our Project loosely coupled we have chosen a database per services pattern. That means every service needs its database which requires a lot of space and physical resources. Therefore, we solve this problem by implementing single server instances for the cluster which has multiple Databases, for example, we are using MongoDB, MySQL server which has a database schema for each service with their secret credentials. 
+
+### Containerizing Every Service
+
+It focuses on some properties which make microservices unique. Segmentation or separation of every service is one of the major challenges for us during the implementation of our project.
+In a monolithic architecture, as it is a single unit of a project means there is only a chance to implement it into one environment. On the other hand, microservice offers various environments that means we can build every service in a different environment of the stack.
+We are implementing our independent services with the help of docker containers because it is a good choice for running microservice applications using a very low process of our system. Docker offers huge amounts of images(libraries, code, files ) where we can use only which is required for our particular services. For example, we implement our cart service using node.js and MongoDB so we only included those lightweight images in one docker container and built our cart service in our VM.
+
+### Managing Microservice
+
+Before developing a microservice project we must ensure the plan of which architecture pattern we are evolving. As the services are increasing the project is getting more complex because we are using different programming languages for developing different services. Integrating each service causes huge challenges in our entire project. In the initial stage, we planned our architecture which services we needed and were going to implement. We used the Kubernetes orchestration process to scale up our project which was a big challenge though for our project.  
+
+### CQRS Complexity
+
+Command Query Responsibility Segregation pattern is most popular for message query models but implementing it in our project is challenging because it uses the same data in multiple models. As we are using event sourcing for data communication so CQRS is not related to our event sourcing. Even if we apply it for some services it makes complexity in reading and writing data. 
+
+### Environment Value
+
+Using environment variables is one of the challenges in our project. It differs across different service environments for managing and manipulating. For example, if we get a value from outside of our system, retrieve it, and wrap it in our service that is hard technically though.
+
 
 
   
