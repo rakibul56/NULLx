@@ -7,7 +7,6 @@ import '../App.css';
 import axios from 'axios';
 import Product from './product';
 
-
 class Homepage extends React.Component {
 
     constructor() {
@@ -17,7 +16,6 @@ class Homepage extends React.Component {
             isCartMenuClick: false,
         }
     }
-
     componentDidMount() {
         // var productQueryString = process.env.INVENTORYSERVICE || "http://localhost:3002/products";
         axios.get("http://134.109.233.159:30004/products")
@@ -64,5 +62,4 @@ class Homepage extends React.Component {
         );
     }
 }
-
 export default Homepage;
