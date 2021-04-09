@@ -1,9 +1,18 @@
-# Microservice Demo
-Microservices for Demo project (Webshop)
+# NULLx
 
-Homepage Link (Webshops): http://vsr-kub005.informatik.tu-chemnitz.de:30002/
+## WebShops (Microservice Demonstration)
 
-Teaching UI link: https://nullx-de.github.io/home/NULLxUI/ 
+The microservice application is a cloud-native microservice Demonstrator. The application is a web-based e-commerce application where users can browse items, add them to the cart, and purchase them.
+
+**WebShops /Homepage URL (Webshops):** http://vsr-kub005.informatik.tu-chemnitz.de:30002/
+
+**NULLx Learning Kit URL:** https://nullx-de.github.io/home/NULLxUI/ 
+
+## Screenshots
+
+| Home Page                                                                                                         | Checkout Screen                                                                                                    |
+| ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| ![Screenshot of store homepage](./doc/homepage.png) | ![Screenshot of checkout screen](./doc/cartpage.png) |
 
 # Installation
 1. Go to your Virtual Machine or Minikube. 
@@ -66,11 +75,11 @@ kubectl get service frontend-microservice | awk '{print $4}'
 
 ## Architecture
 
-**Webshop** is composed of * microservices written in different
+The WebShops is composed of a set of microservices written in different
 languages that talk to each other via events, REST API.
 
 [![Architecture of
-microservices](./architecture_.jpg)](./architecture_.jpg)
+microservices](./doc/architecture.jpg)](./architecture_.jpg)
 
 
 | Service                                              | Language      | Description                                                                                                                       |
@@ -78,15 +87,11 @@ microservices](./architecture_.jpg)](./architecture_.jpg)
 | [frontend](./*)                                      | React.js      | Exposes an HTTP server to serve the website. Does not require signup/login and generates session IDs for all users automatically. |
 | [cartService](./*)                                   | Node.js       | Stores the items in the user's shopping cart in Redis and retrieves it.                                                           |
 | [orderService](./*)                                  | Node.js       | Handle order request from the cart service                        |
-| [customerService](./*)                               | Node.js       | Provides customer information, status, paymentCredits etc . |
-| [inventoryService](./*)                              | Node.js       | Provides the list of products from a JSON file and ability to search products and get individual products.                        |
-| [paymentService](./*)                                | Node.js       | Gives shipping cost estimates based on the shopping cart.(mock)                                |
-| [shippingService](./*)                               | Node.js       | Track shippment and send an order-complete event to the order history                                                                                  |
-| [notificationService](./*)                           | Python        | Sends users an order confirmation email (mock).                                      |
+| [inventoryService](./*)                              | Node.js       | Provides the list of products from a JSON file and ability to search products and get individual products.                           |
+| [shippingService](./*)                               | Node.js       | Track shippment and send an order-complete event to the order history                                                                |
+| [notificationService](./*)                           | Python        | Sends users an order confirmation email (mock).                                                      |
 | [orderhistoryService](./*)                           | Node.js       | Provides order history and product catelogues.                                      
-| [userInformationService](./*)                        | Java          | Provides user information and authenticate users. (*under_development)                                                            |
 | [reviewService](./*)                                 | C#            | Review service for the product. 
-| [rabbitMq](./*)                                      | JavaScript          | Passing messages between services.
   
 ## Microservice Patterns usages for development
 
@@ -96,16 +101,10 @@ microservices](./architecture_.jpg)](./architecture_.jpg)
   Most services need to persist data in some kind of database.
 - **[Saga Pattern](https://microservices.io/patterns/data/saga.html)**
   A saga is a sequence of local transactions. Each local transaction updates the database and publishes a message or event to trigger the next local transaction in the saga.
-- **[Api-composition pattern](https://microservices.io/patterns/data/api-composition.html)**
-  It's invoking the services that own the data and performs an in-memory join of the results.
-- **[Event sourcing Pattern](https://microservices.io/patterns/data/event-sourcing.html)**
-  To reliably/atomically update the database and publish messages/events.
 - **[API Gateway / Backends for Frontends Pattern](https://microservices.io/patterns/apigateway.html)**
   To give the clients of a Microservices-based application access the individual services.
 - **[Messaging Pattern](https://microservices.io/patterns/communication-style/messaging.html)**
   To collaborate and communicate services in a microservice-based application.
-- **[Circuit Breaker Pattern](https://microservices.io/patterns/reliability/circuit-breaker.html)**
-  To prevent a network or service failure from cascading to other services.
 - **[Service Instance per container pattern](https://microservices.io/patterns/deployment/service-per-container.html)**
   All the services as a (Docker) container image and deploy each service instance as a container in the kubernetes.
 
@@ -114,17 +113,24 @@ microservices](./architecture_.jpg)](./architecture_.jpg)
 --------------------------------------------------
 # Documentation
 
-## Reason for choosing RabbitMq:
+##	Service Instance Per Service
 
-It has enormous feathers and is freely available, which will be a great option to implement messaging queues in our microservices architecture project in this planspiel. This messaging queues pattern helps us to keep other services persistent while communicating with them. RabbitMQ has a functionality to keep the queues in priority so that consumers can easily get high priority messages or tasks.
-For its huge ability and fulfill every requirement of us we choose this instead of others like Apache Kafka. Apache Kafka also is a great tool but for this project it is unnecessary to use other functionality which we do not need at all. Starting this lightweight RabbitMQ tool with huge functionality we can easily achieve our goals.
+WebShops has a set of services that need to be packaged and deployed. The most popular approach is using Docker [6] container technology for the deployment so that every microservices can be containerized using the docker image. WebShops is deployed in the Kubernetes cluster. Details discussion is written in chapter 6.
 
-## Reason for choosing database per service:
+##	Decomposed by business capability
 
-For our project, We must ensure our application should be loosely coupled so that we can develop, deploy and scale it independently. Database per service gives us that opportunity to develop our application in such a way if we need to change one service database for example that it does not impact other services at all.
+WebShops is a large application therefore the goal is to accelerate the software development of a set of services in such a continuous way that it can be a loosely coupled system. The pattern solved this problem and divided the application into several microservices for example WebShops has cart service, inventory service, order service, shipping service, order history service that means every microservices has its unique responsibility hence the entire system will be loosely coupled. 
 
-“Different services have different data storage requirements. For some services, a relational database is the best choice. Other services might need a NoSQL database such as MongoDB, which is good at storing complex, unstructured data, or Neo4J, which is designed to efficiently store and query graph data.”[2]
+##	Database Per Service
+In Monolithic architecture, Normally database has a single schema with lots of indexes which leads to tightly coupled interdependency between services. There are so many problems with it for example if we deploy an application and if it needs to be changed we have to redeploy the whole application again. Even if we change a database index we must do the same. So we can imagine the problem of tightly-coupled architecture not easily scalable, every team must look in a single database, if any change is needed, there is no way to do it simultaneously without deploying it again. In a microservices architecture, there is an opportunity to make an application loosely coupled, with no interdependency between services. Every single team only looks forward to their service database. To develop WebShops, we must ensure that WebShops should be loosely coupled so that every microservice can be developed, deployed and scale independently. 
+Database per service gives us that opportunity to develop WebShops in such a way if we need to change one service database for example that it does not impact other services at all. Every microservice of WebShops has different data storage requirements. For some services, a relational database is the best choice for example Inventory service, Order service needs SQL base database service. Other services might need a NoSQL database such as MongoDB for example Cart service of WebShops, which is good at storing complex, unstructured data. [5] We applied this pattern with another modification such as a single instance of the database application will be installed in the cluster. Then every microservice will get a dedicated database from the particular server. In our Kubernetes [7] cluster, we deployed MongoDB, MySQL, PostgreSQL server. Microservices of WebShops can access these servers with a dedicated database and user credentials. For those benefits, we found a database per service is the right choice for our application which can fulfil our every requirement.   
 
-For those benefits, we found a database per service is the right choice for our application which is able to fulfill our every requirement.   
+## Command Query Responsibility Segregation (CQRS)
+
+WebShops has loosely coupled microservices therefore it is hard to get the join data from multiple services. To solve the problem, we used the CQRS pattern. WebShops has a dedicated microservice called Order History Service which is responsible for providing order data to the end-user. It stores data from Inventory service and Order service in a Read-only database thus, command and query operation segregated into other services which lead to developing a more sophisticated loosely coupled microservice system. 
+
+
+
+  
 
 
