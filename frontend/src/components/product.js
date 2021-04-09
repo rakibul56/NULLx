@@ -7,13 +7,13 @@ class Product extends React.Component{
         this.handleClick = this.handleClick.bind(this);
     }
     handleClick(){
-        console.log("product child click event");
-        axios.post('http://134.109.233.159:30032/carts/1', {
-            product_id: "1",
+        console.log("Event thrown: add to click event");
+        axios.post('http://134.109.233.159:30032/carts/'+this.props.user_id, {
+            product_id: this.props.product_id,
             product_name: this.props.name,
             product_price: this.props.price,
             product_image: this.props.img,
-            quantity: "20",
+            quantity: this.props.product_quantity,
         })
             .then(function (response) {
                 console.log(response);

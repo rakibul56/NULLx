@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3009;
+const port = process.env.PORT || 3024;
 var mysql = require('mysql');
 const cors = require('cors');
 var bodyParser = require('body-parser');
@@ -8,79 +8,17 @@ var bodyParser = require('body-parser');
 app.use(cors());
 app.use(bodyParser.json());
 
-var con = mysql.createConnection('mysql://root:1234@10.105.125.0:3306/product_db');
-//var con = mysql.createConnection('mysql://root:@localhost/order_list_db');
+var amqp = require('amqplib/callback_api');
+const amqp_url = 'amqp://localhost'; //for local environment
+//const amqp_url = 'amqp://localhost'; //for server
+
+//var con = mysql.createConnection('mysql://root:1234@10.105.125.0:3306/product_db');
+var con = mysql.createConnection('mysql://root:@localhost/order_list_db');
 
 con.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
 });
-
-/*
-
-var amqp = require('amqplib/callback_api');
-const amqp_url = 'amqp://localhost'; //for local environment
-//const amqp_url = 'amqp://localhost'; //for server
-
-
-function amqpMethod(msg){
-    amqp.connect(amqp_url, function (error0, connection) {
-        if (error0) {
-            console.log( error0 );
-        }
-        /!*
-        * Channel for sending Data
-        *
-        * *!/
-        connection.createChannel(function (error1, channel) {
-            if (error1) {
-                console.log( error1 );
-            }
-
-            var orderCreated = 'orderCreated';
-
-            var msg = {order_id: obj.order_id, status: obj.status};
-            msg = JSON.stringify(msg);
-
-            channel.assertQueue(orderCreated, {
-                durable: false
-            });
-            channel.sendToQueue(orderCreated, Buffer.from(msg));
-
-        }); /!* ending of channel for sending data *!/
-    });
-}
-
-/!*
-* always consuming data from other services
-* *!/
-amqp.connect(amqp_url, function (error0, connection) {
-    if (error0) {
-        console.log( error0 );
-    }
-    connection.createChannel(function (error1, channel) {
-        if (error1) {
-            console.log( error1);
-        }
-
-        var orderStatus = 'orderStatus';
-        channel.assertQueue(orderStatus, {
-            durable: false
-        });
-
-        channel.consume(orderStatus, function (msg) {
-                //console.log(" [x] Received %s", msg.content.toString());
-                let msg_json = JSON.parse(msg.content);
-                console.log("Event 1: " + msg_json.product_id);
-            }
-            , {
-                noAck: true
-            });
-
-    });
-});
-*/
-
 
 app.get('/orders', cors(), (req, res) => {
     var queryStr = "SELECT * FROM orders WHERE 1";

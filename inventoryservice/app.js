@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 app.use(cors());
 app.use(bodyParser.json());
+/*
 
 var amqp = require('amqplib/callback_api');
 const amqp_url = 'amqp://localhost'; //for local environment
@@ -17,9 +18,9 @@ function cartItemSearchResultMethod(hasEnoughQuantity) {
         if (error0) {
             throw error0;
         }
-        /*
+        /!*
         * Channel for Sending Data
-        * */
+        * *!/
         connection.createChannel(function (error1, channel) {
             if (error1) {
                 throw error1;
@@ -36,7 +37,7 @@ function cartItemSearchResultMethod(hasEnoughQuantity) {
             channel.sendToQueue(cartItemSearchQueue, Buffer.from(msg));
             console.log(" [x] Sent %s", msg);
 
-        }); /* ending of channel for sending data */
+        }); /!* ending of channel for sending data *!/
 
     });
 }
@@ -45,9 +46,9 @@ amqp.connect(amqp_url, function (error0, connection) {
     if (error0) {
         throw error0;
     }
-    /*
+    /!*
     * Channel for consuming Data
-    * */
+    * *!/
     connection.createChannel(function (error1, channel) {
         if (error1) {
             throw error1;
@@ -83,11 +84,11 @@ amqp.connect(amqp_url, function (error0, connection) {
                 noAck: true
             });
 
-        /*
+        /!*
     * Event 2
     * cart added
     * operation: Delete product quantity from the product database
-    * */
+    * *!/
         var queue = 'cartadded';
         channel.assertQueue(queue, {
             durable: false
@@ -103,12 +104,12 @@ amqp.connect(amqp_url, function (error0, connection) {
                 noAck: true
             });
 
-        /*
+        /!*
         * Consuming Event
         * Queue: cartDeletedByUser
-        * */
+        * *!/
         var cartDeletedByUser = 'cartDeletedByUser';
-        /*channel.assertQueue(queue, {
+        /!*channel.assertQueue(queue, {
             durable: false
         });
 
@@ -135,9 +136,10 @@ amqp.connect(amqp_url, function (error0, connection) {
             }
             , {
                 noAck: true
-            });*/
+            });*!/
     });
 });
+*/
 
 // if(process.env.DATABASENAME && process.env.HOSTNAME && process.env.USERDB && process.env.PASSWORDDB){
 //     $databasename = process.env.DATABASENAME;
@@ -158,8 +160,8 @@ amqp.connect(amqp_url, function (error0, connection) {
 //     database: "product_db"
 // });
 // $link = mysql_connect('http://10.105.125.0:3306/', 'root', '1234');
-//var con = mysql.createConnection('mysql://root:1234@10.105.125.0:3306/product_db');
-var con = mysql.createConnection('mysql://root:@localhost/order_db');
+var con = mysql.createConnection('mysql://root:1234@10.105.125.0:3306/product_db');
+//var con = mysql.createConnection('mysql://root:@localhost/order_db');
 
 con.connect(function (err) {
     if (err) throw err;
@@ -268,7 +270,7 @@ app.delete('/products/:id', cors(), (req, res) => {
             res.send("Bad request. Please check your requested path.");
         }
         //console.log("data" + JSON.stringify(data));
-        if (result.length > 0) {
+        if (result) {
             res.status(200);
             res.send("Successfully deleted");
         } else {
