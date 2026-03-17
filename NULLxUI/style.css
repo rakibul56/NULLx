@@ -11,14 +11,17 @@ style {
   color: red;
 }
 h2 {
-  background-color: royalblue;
+  background-color: #1c83a5;
+  color: white;
+}
+
+h3 {
+  color: #1c83a5;
 }
 
 .container-fluid {
-  color: #f1f1f1;
-  max-width: auto;
-
-  overflow: auto;
+  width: 100%;
+  height: auto;
 }
 
 #s1 {
@@ -37,6 +40,10 @@ h2 {
 
 #head {
   padding: 2rem;
+  background-color: #1c83a5;
+  width: 100%;
+  height: auto;
+  color: white;
 }
 
 #fot {
