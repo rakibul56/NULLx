@@ -6,7 +6,7 @@ before_script:
 services:
   - docker:18.09.1-dind
 
-build:
+build-frontend:
   stage: build
   only:
     - master
@@ -14,4 +14,10 @@ build:
     - docker build -t frontend:latest frontend/.
     - docker tag frontend:latest rakibul56/frontend:latest
     - docker push rakibul56/frontend:latest
-   
+
+build-inventoryservice:
+  stage: build
+  only:
+    - master
+  script:
+    - docker build -t inventoryservice inventoryservice/.
